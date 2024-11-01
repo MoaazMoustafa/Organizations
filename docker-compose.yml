@@ -1,0 +1,26 @@
+version: '3.2'
+services:
+  app:
+    build: .
+    expose:
+      - 3000
+    ports:
+      - 8080:8080
+    restart: always
+    depends_on:
+      - database
+    environment:
+      JWT_SECRET_KEY: emery_gpo_backlands_panama_cobble
+      MONGO_URL: 'mongodb://database:27017/organizations'
+      PORT: 8080
+      JWT_ACCESS_SECRET: 'ACCESS_SECRET'
+      JWT_ACCESS_EXPIRY: '10m'
+      JWT_REFRESH_SECRET: 'REFRESH_SECRET'
+      JWT_REFRESH_EXPIRY: '1d'
+
+  database:
+    image: mongo
+    ports:
+      - 27019:27017
+    volumes:
+      - ./data:/data/db
